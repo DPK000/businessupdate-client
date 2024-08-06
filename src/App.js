@@ -3,7 +3,7 @@ import React from 'react';
 function App() {
   return (
     <div>
-      <p>Hello world</p>
+      <p>React development omgeving</p>
     </div>
   );
 }
