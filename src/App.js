@@ -50,39 +50,15 @@ const App = () => {
     await sendToBackend(salesData);
   };
 
-  const scheduleFetch = () => {
-    const times = ['10:00', '16:00', '21:38', '23:59'];
-    
-    const now = new Date();
-    const currentTime = now.getHours() * 100 + now.getMinutes();
-    
-    const nextTimes = times.map(time => {
-      const [hours, minutes] = time.split(':').map(Number);
-      return hours * 100 + minutes;
-    }).filter(time => time > currentTime);
-
-    const nextTime = nextTimes.length ? Math.min(...nextTimes) : Math.min(...nextTimes.concat(times.map(t => t.split(':').map(Number).reduce((a, b) => a * 100 + b))));
-
-    const [nextHours, nextMinutes] = times.find(time => time.split(':').map(Number).reduce((a, b) => a * 100 + b) === nextTime).split(':').map(Number);
-    
-    const nextFetch = new Date();
-    nextFetch.setHours(nextHours);
-    nextFetch.setMinutes(nextMinutes);
-    nextFetch.setSeconds(0);
-    
-    const timeToNextFetch = nextFetch - now;
-
-    setTimeout(async () => {
-      await fetchAllData();
-      scheduleFetch(); // Reschedule for the next day
-    }, timeToNextFetch);
-  };
-
   useEffect(() => {
-    scheduleFetch(); // Schedule the initial fetch
+    // Initial fetch
+    fetchAllData();
 
-    // Cleanup (though it is not strictly necessary here as scheduling is handled by setTimeout)
-    return () => {};
+    // Set up interval to call fetchAllData every 36,000 milliseconds (36 seconds)
+    const intervalId = setInterval(fetchAllData, 60000);
+
+    // Clean up interval on component unmount
+    return () => clearInterval(intervalId);
   }, []);
 
   return (
