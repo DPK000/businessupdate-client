@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
+
 const App = () => {
   const [sales, setSales] = useState({
     salesDE: '',
@@ -82,7 +83,7 @@ const App = () => {
   };
 
   useEffect(() => {
-    const timesToRun = ["08:00", "12:00", "16:00", "20:00", "23:59"];
+    const timesToRun = ["06:00", "08:00", "12:00", "16:00", "20:00", "23:59"];
 
     const checkTimeAndFetch = () => {
       const now = new Date();
