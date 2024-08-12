@@ -31,7 +31,7 @@ const App = () => {
 
   const sendToBackend = async (salesData) => {
     try {
-      const res = await fetch('https://businessupdate-server-4bow.vercel.app/api/sales', {
+      const res = await fetch('http://localhost:4000/api/sales', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
